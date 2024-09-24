@@ -17,5 +17,7 @@ public class EjemploProcesos {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        //Para archivos .jar, añadir -java -jar
     }
 }
