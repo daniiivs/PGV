@@ -1,4 +1,4 @@
-package UT1.Teoria;
+package UT1.Teoria.Procesos;
 
 import java.io.IOException;
 
@@ -6,8 +6,8 @@ public class EjemploRuntime {
     public static void main(String[] args) {
         String primerComando = "notepad.exe";
         String segundoComando = "calc.exe";
-        String rutaBat = "src/UT1/Teoria/prueba.bat";
-        String rutaJar = "java -jar src/UT1/Teoria/Calculadora.jar";
+        String rutaBat = "src/UT1/Teoria/Procesos/prueba.bat";
+        String rutaJar = "java -jar src/UT1/Teoria/Procesos/Calculadora.jar";
 
         ProcessBuilder pb = new ProcessBuilder(primerComando);
         Runtime rt = Runtime.getRuntime();

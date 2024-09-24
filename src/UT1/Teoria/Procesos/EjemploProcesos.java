@@ -1,4 +1,4 @@
-package UT1.Teoria;
+package UT1.Teoria.Procesos;
 
 import java.io.IOException;
 
@@ -8,8 +8,8 @@ public class EjemploProcesos {
         //Definir el comando
         //ProcessBuilder pb = new ProcessBuilder(comando);
 
-        String comando = "./src/UT1/Teoria/prueba.bat";
-        ProcessBuilder pb = new ProcessBuilder("cmd", "/C", "start src\\UT1\\Teoria\\prueba.bat"); //poner las \\ porque si no no coge la ruta
+        String comando = "./src/UT1/Teoria/Procesos/prueba.bat";
+        ProcessBuilder pb = new ProcessBuilder("cmd", "/C", "start src\\UT1\\Teoria\\Procesos\\prueba.bat"); //poner las \\ porque si no no coge la ruta
 
         //Arrancar el proceso
         try {
