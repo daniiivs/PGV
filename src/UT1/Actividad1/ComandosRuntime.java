@@ -16,7 +16,7 @@ public class ComandosRuntime {
         // Archivo .bat
         String bat = ".\\src\\UT1\\Actividad1\\ArchivoBat.bat";
         try {
-            rt.exec(bat);
+            rt.exec("cmd /C start " + bat);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

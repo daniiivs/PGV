@@ -15,7 +15,7 @@ public class ComandosProcess {
 
         // Archivo .bat
         String bat = ".\\src\\UT1\\Actividad1\\ArchivoBat.bat";
-        ProcessBuilder pb2 = new ProcessBuilder(bat);
+        ProcessBuilder pb2 = new ProcessBuilder("cmd", "/C", "start", bat);
         try {
             pb2.start();
         } catch (IOException e) {

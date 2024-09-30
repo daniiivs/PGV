@@ -1,2 +1,3 @@
 notepad
 mspaint
+ipconfig
