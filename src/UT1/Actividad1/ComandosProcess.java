@@ -23,7 +23,7 @@ public class ComandosProcess {
         }
 
         // Archivo .jar
-        String jar = "src\\UT1\\Actividad1\\Calculadora.jar";
+        String jar = ".\\src\\UT1\\Actividad1\\Calculadora.jar";
         ProcessBuilder pb3 = new ProcessBuilder("java", "-jar", jar);
         try {
             pb3.start();
