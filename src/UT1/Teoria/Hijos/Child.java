@@ -1,6 +1,5 @@
 package UT1.Teoria.Hijos;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Child {
