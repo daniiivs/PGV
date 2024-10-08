@@ -8,7 +8,7 @@ import java.io.OutputStreamWriter;
 public class MayusculaPadre {
     public static void main(String[] args) {
         try {
-            Process proceso = new ProcessBuilder("java", "-jar","src/UT1/Actividad2/Mayuscula.jar").start();
+            Process proceso = new ProcessBuilder("java", "-jar", "src/UT1/Actividad2/Mayuscula.jar").start();
 
             OutputStreamWriter osw = new OutputStreamWriter(proceso.getOutputStream());
             String mensaje = "Hola, mi nombre es Daniel Viera";
