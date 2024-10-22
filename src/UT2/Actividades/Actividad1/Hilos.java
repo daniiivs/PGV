@@ -37,10 +37,17 @@ public class Hilos extends Thread {
             if (i == 4) {
                 if (Thread.currentThread().getPriority() == Thread.MIN_PRIORITY) {
                     Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
-                } else if (Thread.currentThread().getPriority() == Thread.MAX_PRIORITY) {
-                    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
-                    break;
+                    continue;
                 }
+                if (Thread.currentThread().getPriority() == Thread.MAX_PRIORITY) {
+                    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+                }
+            }
+            try {
+                //Thread.sleep(1000);
+                Thread.sleep((int) (Math.random() * 1000));
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }
     }
