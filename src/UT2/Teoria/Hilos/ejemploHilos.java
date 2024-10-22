@@ -1,6 +1,4 @@
-package UT2.Teoria;
-
-import java.util.Scanner;
+package UT2.Teoria.Hilos;
 
 public class ejemploHilos extends Thread {
     MiBuffer mb;

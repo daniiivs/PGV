@@ -1,4 +1,4 @@
-package UT2.Teoria;
+package UT2.Teoria.Hilos;
 
 public class MiBuffer {
     int contador = 0;
