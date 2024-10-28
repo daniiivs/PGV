@@ -1,4 +1,4 @@
-package UT2.Teoria.Sincronizacion;
+package UT2.Teoria.Sincronizacion.ejemploClase;
 
 public class MiBuffer {
     int contador = 0;
