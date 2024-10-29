@@ -1,4 +1,4 @@
-package UT2.Actividades.Actividad2.ModeloPC;
+package UT2.Actividades.Actividad2.Semaforo;
 
 public class Plazas {
     final int plazasTotales = 6;

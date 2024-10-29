@@ -1,9 +1,10 @@
-package UT2.Actividades.Actividad2.ModeloPC;
+package UT2.Actividades.Actividad2.ModeloPCDibujo;
 
 import java.util.Random;
 
 public class Coches extends Thread {
     Plazas plazas;
+    int plazaOcupada;
     int vueltas = 2;
 
     public Coches(Plazas plazas) {
@@ -16,15 +17,15 @@ public class Coches extends Thread {
         try {
             Thread.sleep(random.nextLong(1, 26) * 1000);
             for (int i = 0; i < vueltas; i++) {
-                if (plazas.aparcar()) {
+                if ((plazaOcupada = plazas.aparcar()) != -1) {
                     Thread.sleep(random.nextLong(16, 26) * 1000);
-                    plazas.salir();
+                    plazas.salir(plazaOcupada);
                     break;
                 } else {
-                    Thread.sleep(random.nextLong(5, 11) * 1000);
                     if (i == vueltas - 1) {
                         System.out.println("El coche con matrícula " + Thread.currentThread().getName() + " no ha podido aparcar, así que se va a ir...");
                     }
+                    Thread.sleep(random.nextLong(5, 11) * 1000);
                 }
             }
         } catch (InterruptedException e) {
