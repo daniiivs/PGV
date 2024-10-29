@@ -1,11 +1,9 @@
-package UT2.Actividades.Actividad2.Semaforo;
+package UT2.Actividades.Actividad2.ModeloPCNormal;
 
 import java.util.Random;
-import java.util.concurrent.Semaphore;
 
 public class Lanzador {
     public static void main(String[] args) {
-        Semaphore semaforo = new Semaphore(1);
         Plazas plazas = new Plazas();
         Random random = new Random();
         StringBuilder matricula;
@@ -18,7 +16,7 @@ public class Lanzador {
             for (int j = 0; j < 3; j++) {
                 matricula.append((char) random.nextInt(65, 91));
             }
-            coches = new Coches(plazas, semaforo);
+            coches = new Coches(plazas);
             coches.setName(matricula.toString());
             coches.start();
         }

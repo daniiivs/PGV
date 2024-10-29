@@ -1,10 +1,10 @@
-package UT2.Actividades.Actividad2.Semaforo;
+package UT2.Actividades.Actividad2.ModeloPCNormal;
 
 public class Plazas {
     final int plazasTotales = 6;
     int plazasOcupadas = 0;
 
-    public boolean aparcar() {
+    public synchronized boolean aparcar() {
         if (plazasOcupadas < plazasTotales) {
             plazasOcupadas++;
             System.out.println("Plaza OCUPADA por " + Thread.currentThread().getName() + ". Plazas libres: " + (plazasTotales - plazasOcupadas));
@@ -15,7 +15,7 @@ public class Plazas {
         }
     }
 
-    public void salir() {
+    public synchronized void salir() {
         plazasOcupadas--;
         System.out.println("Plaza LIBERADA por " + Thread.currentThread().getName() + ". Plazas libres: " + (plazasTotales - plazasOcupadas));
     }
