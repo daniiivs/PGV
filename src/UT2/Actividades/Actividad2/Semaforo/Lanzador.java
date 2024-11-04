@@ -5,12 +5,12 @@ import java.util.concurrent.Semaphore;
 
 public class Lanzador {
     public static void main(String[] args) {
-        Semaphore semaforo = new Semaphore(1);
         Plazas plazas = new Plazas();
         Random random = new Random();
         StringBuilder matricula;
         Coches coches;
         int numeroCoches = 10;
+        Semaphore semaforo = new Semaphore(plazas.plazasTotales);
 
         System.out.println("Plazas libres: " + plazas.getPlazasTotales());
         for (int i = 0; i < numeroCoches; i++) {

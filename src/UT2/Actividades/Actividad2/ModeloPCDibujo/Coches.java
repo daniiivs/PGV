@@ -17,9 +17,9 @@ public class Coches extends Thread {
         try {
             Thread.sleep(random.nextLong(1, 26) * 1000);
             for (int i = 0; i < vueltas; i++) {
-                if ((plazaOcupada = plazas.aparcar()) != -1) {
+                if ((plazaOcupada = plazas.ocupar()) != -1) {
                     Thread.sleep(random.nextLong(16, 26) * 1000);
-                    plazas.salir(plazaOcupada);
+                    plazas.liberar(plazaOcupada);
                     break;
                 } else {
                     if (i == vueltas - 1) {

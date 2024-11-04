@@ -3,15 +3,15 @@ package UT2.Actividades.Actividad2.ModeloPCDibujo;
 import java.util.Arrays;
 
 public class Plazas {
+    static final int plazasTotales = 6;
     char[] plazasDisponibles;
-    final int plazasTotales = 6;
 
     public Plazas() {
         plazasDisponibles = new char[plazasTotales];
         Arrays.fill(plazasDisponibles, 'O');
     }
 
-    public synchronized int aparcar() {
+    public synchronized int ocupar() {
         for (int i = 0; i < plazasTotales; i++) {
             if (plazasDisponibles[i] == 'O') {
                 plazasDisponibles[i] = 'X';
@@ -24,7 +24,7 @@ public class Plazas {
         return -1;
     }
 
-    public synchronized void salir(int plazaLiberada) {
+    public synchronized void liberar(int plazaLiberada) {
         plazasDisponibles[plazaLiberada] = 'O';
         System.out.println("Plaza LIBERADA por " + Thread.currentThread().getName() + ". Plazas:");
         imprimirPlazas();
