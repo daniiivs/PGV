@@ -10,7 +10,7 @@ public class Productos {
         Arrays.fill(estanteria, 'O');
     }
 
-    public synchronized boolean comprar() {
+    public boolean comprar() {
         for (int i = 0; i < estanteria.length; i++) {
             if (estanteria[i] == 'O') {
                 estanteria[i] = '_';
@@ -20,7 +20,7 @@ public class Productos {
         return false;
     }
 
-    public synchronized boolean reponer() {
+    public boolean reponer() {
         for (int i = 0; i < estanteria.length; i++) {
             if (estanteria[i] == '_') {
                 estanteria[i] = 'O';
