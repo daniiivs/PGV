@@ -10,7 +10,7 @@ public class Lanzador {
         StringBuilder matricula;
         Coches coches;
         int numeroCoches = 10;
-        Semaphore semaforo = new Semaphore(plazas.plazasTotales);
+        Semaphore semaforo = new Semaphore(1);
 
         System.out.println("Plazas libres: " + plazas.getPlazasTotales());
         for (int i = 0; i < numeroCoches; i++) {

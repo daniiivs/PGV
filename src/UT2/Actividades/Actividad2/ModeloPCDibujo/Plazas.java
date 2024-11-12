@@ -4,16 +4,16 @@ import java.util.Arrays;
 
 public class Plazas {
     static final int plazasTotales = 6;
-    char[] plazasDisponibles;
+    char[] plazasDisponibles; // [ _ _ _ _ _ _ ]
 
     public Plazas() {
         plazasDisponibles = new char[plazasTotales];
-        Arrays.fill(plazasDisponibles, 'O');
+        Arrays.fill(plazasDisponibles, '_');
     }
 
     public synchronized int ocupar() {
         for (int i = 0; i < plazasTotales; i++) {
-            if (plazasDisponibles[i] == 'O') {
+            if (plazasDisponibles[i] == '_') {
                 plazasDisponibles[i] = 'X';
                 System.out.println("Plaza OCUPADA por " + Thread.currentThread().getName() + ". Plazas:");
                 imprimirPlazas();
@@ -25,7 +25,7 @@ public class Plazas {
     }
 
     public synchronized void liberar(int plazaLiberada) {
-        plazasDisponibles[plazaLiberada] = 'O';
+        plazasDisponibles[plazaLiberada] = '_';
         System.out.println("Plaza LIBERADA por " + Thread.currentThread().getName() + ". Plazas:");
         imprimirPlazas();
     }
