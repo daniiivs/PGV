@@ -6,7 +6,7 @@ import java.util.concurrent.Semaphore;
 // Clase Clientes que extiende de Thread
 public class Clientes extends Thread {
     final static Random random = new Random();
-    final static int intentos = 3; // Numero de veces que un cliente intenta pedir prestamo
+    final static int intentos = 2; // Numero de veces que un cliente intenta pedir prestamo
     Semaphore semaforo;
     String banco;
     double prestamo; // Importe del prestamo a pedir
