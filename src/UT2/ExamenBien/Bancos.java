@@ -60,7 +60,7 @@ public class Bancos extends Thread {
             double aumento; // Cantidad a inyectar
             aumento = Lanzador.redondear(random.nextDouble(10000, 20000));
             fondos[i] = fondos[i] + aumento;
-            System.out.println("\n" + currentThread().getName().toUpperCase() + " HA RECIBIDO UNA INYECCIÓN DE " + aumento + "€, POR LO QUE TIENE UN TOTAL DE " + getFondos(vectorBancos[i]) + "€. (Inyecciones " + numeroInyecciones + ")");
+            System.out.println("\n" + vectorBancos[i].toUpperCase() + " HA RECIBIDO UNA INYECCIÓN DE " + aumento + "€, POR LO QUE TIENE UN TOTAL DE " + getFondos(vectorBancos[i]) + "€. (Inyecciones " + numeroInyecciones + ")");
         }
 
     }
