@@ -17,8 +17,8 @@ public class ServidorSocketStream extends Thread {
             newSocket = serverSocket.accept();
 
             System.out.println("Conexion recibida en " + getName());
-            InputStream is = newSocket.getInputStream();
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            BufferedReader br = new BufferedReader(new InputStreamReader(newSocket.getInputStream()));
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(newSocket.getOutputStream()));
 
             while (true) {
                 mensaje = br.readLine();
@@ -28,6 +28,9 @@ public class ServidorSocketStream extends Thread {
                         break;
                     }
                     System.out.println("Mensaje recibido: " + mensaje);
+                    bw.write(mensaje);
+                    bw.newLine();
+                    bw.flush();
                 }
             }
             System.out.println("Cerramos el " + getName());

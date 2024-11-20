@@ -5,11 +5,25 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class ClienteSocketStream {
+public class ClienteSocketStream extends Thread {
+    static BufferedReader br;
+
+    public void run() {
+        String line;
+        while (true) {
+            try {
+                if ((line = br.readLine()) != null) {
+                    System.out.println(line);
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 
     public static void main(String args[]) throws IOException {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Hola, escribe tu nombre: ");
+        System.out.print("Escribe tu nombre: ");
         String myname = sc.nextLine();
         String mensaje;
 
@@ -20,8 +34,12 @@ public class ClienteSocketStream {
 
         clientSocket.connect(addr);
 
-        OutputStream os = clientSocket.getOutputStream();
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
+        br = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+        ClienteSocketStream listener = new ClienteSocketStream();
+        listener.start();
+
         System.out.println("Escribe Q para salir");
 
         while (true) {
