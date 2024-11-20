@@ -1,4 +1,4 @@
-package UT3.Teoria.SocketStream;
+package UT3.Teoria.SocketStreamPruebas;
 
 import javax.swing.*;
 import java.awt.*;
