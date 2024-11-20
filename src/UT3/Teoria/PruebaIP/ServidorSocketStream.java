@@ -1,8 +1,8 @@
-package UT3.Teoria.SocketStream;
+package UT3.Teoria.PruebaIP;
 
 import java.io.*;
-import java.net.Socket;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class ServidorSocketStream extends Thread {

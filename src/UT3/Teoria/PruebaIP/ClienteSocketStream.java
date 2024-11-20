@@ -1,4 +1,4 @@
-package UT3.Teoria.SocketStream;
+package UT3.Teoria.PruebaIP;
 
 import java.io.*;
 import java.net.InetSocketAddress;
