@@ -1,6 +1,7 @@
 package UT3.Teoria.PruebaIP;
 
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -60,8 +61,14 @@ public class ServidorSocketStream extends Thread {
     }
 
     public static void main(String args[]) throws IOException {
+        final String IP = "192.168.137.1";
+        final int PORT = 5555;
+
         chat = new Chat("Servidor");
-        serverSocket = new ServerSocket(5555);
+
+        InetSocketAddress inetSocketAddress = new InetSocketAddress(IP, PORT);
+        serverSocket = new ServerSocket();
+        serverSocket.bind(inetSocketAddress);
         int numeroCanales = 2;
 
         for (int i = 0; i < numeroCanales; i++) {
