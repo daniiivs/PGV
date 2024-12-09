@@ -61,7 +61,7 @@ public class ServidorSocketStream extends Thread {
     }
 
     public static void main(String args[]) throws IOException {
-        final String IP = "192.168.137.1";
+        final String IP = "192.168.1.61";
         final int PORT = 5555;
 
         chat = new Chat("Servidor");

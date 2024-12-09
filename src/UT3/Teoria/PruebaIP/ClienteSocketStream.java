@@ -34,7 +34,7 @@ public class ClienteSocketStream extends Thread {
         System.out.println("Creando nuevo socket cliente");
         Socket clientSocket = new Socket();
         System.out.println("Estableciendo la conexion");
-        InetSocketAddress addr = new InetSocketAddress("192.168.137.1", 5555);
+        InetSocketAddress addr = new InetSocketAddress("192.168.1.61", 5555);
 
         clientSocket.connect(addr);
 
