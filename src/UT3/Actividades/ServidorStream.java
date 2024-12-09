@@ -43,6 +43,10 @@ public class ServidorStream extends Thread {
     }
 
     public boolean comprobarMensaje(String mensaje) {
+        if (mensaje.equalsIgnoreCase("fin:")) {
+            return true;
+        }
+
         if (!mensaje.contains(":")) {
             mandarMensaje("No conocemos ese mensaje.");
             return false;
