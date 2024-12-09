@@ -1,4 +1,4 @@
-package UT3.Teoria.PruebaIP;
+package UT3.Teoria.TCP.ChatRemoto;
 
 import javax.swing.*;
 import java.awt.*;

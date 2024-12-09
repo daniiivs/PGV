@@ -1,4 +1,4 @@
-package UT3.Teoria.PruebaIP;
+package UT3.Teoria.TCP.ChatRemoto;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -61,7 +61,7 @@ public class ServidorSocketStream extends Thread {
     }
 
     public static void main(String args[]) throws IOException {
-        final String IP = "192.168.1.61";
+        final String IP = "192.168.153.89";
         final int PORT = 5555;
 
         chat = new Chat("Servidor");
