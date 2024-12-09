@@ -1,4 +1,4 @@
-package UT3.Teoria.SocketStream;
+package UT3.Teoria.TCP.SocketStream;
 
 import java.io.*;
 import java.net.InetSocketAddress;

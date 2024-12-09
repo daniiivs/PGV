@@ -1,4 +1,4 @@
-package UT3.Teoria.PruebaIP;
+package UT3.Teoria.TCP.Chat;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -34,7 +34,7 @@ public class ClienteSocketStream extends Thread {
         System.out.println("Creando nuevo socket cliente");
         Socket clientSocket = new Socket();
         System.out.println("Estableciendo la conexion");
-        InetSocketAddress addr = new InetSocketAddress("192.168.137.1", 5555);
+        InetSocketAddress addr = new InetSocketAddress("localhost", 5555);
 
         clientSocket.connect(addr);
 

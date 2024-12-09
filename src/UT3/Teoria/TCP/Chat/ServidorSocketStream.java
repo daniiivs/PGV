@@ -1,4 +1,4 @@
-package UT3.Teoria.SocketStreamPruebas;
+package UT3.Teoria.TCP.Chat;
 
 import java.io.*;
 import java.net.Socket;
