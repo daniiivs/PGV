@@ -1,4 +1,4 @@
-package UT3.Actividades;
+package UT3.Actividades.Actividad1;
 
 import java.io.*;
 import java.net.*;
