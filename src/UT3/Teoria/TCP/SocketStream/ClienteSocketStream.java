@@ -6,8 +6,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class ClienteSocketStream {
-
-    public static void main(String args[]) throws IOException {
+    public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
         System.out.print("Hola, escribe tu nombre: ");
         String myname = sc.nextLine();
