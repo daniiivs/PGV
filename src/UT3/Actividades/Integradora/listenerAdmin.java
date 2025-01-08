@@ -4,10 +4,10 @@ import javax.swing.*;
 import java.io.IOException;
 import java.net.DatagramPacket;
 
-public class ListenerMulticast extends Thread {
+public class listenerAdmin extends Thread {
     JTextArea chatArea;
 
-    public ListenerMulticast(JTextArea chatArea) {
+    public listenerAdmin(JTextArea chatArea) {
         this.chatArea = chatArea;
     }
 
@@ -17,12 +17,19 @@ public class ListenerMulticast extends Thread {
         while (true) {
             try {
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
-                Usuario.multicastSocket.receive(packet);
+                Admin.multicastSocket.receive(packet);
                 mensaje = new String(packet.getData(), 0, packet.getLength());
-                chatArea.append(mensaje + "\n");
+                if (mensaje.endsWith(" SE HA UNIDO AL CHAT")) {
+                    chatArea.append("\n" + mensaje + "\n\n");
+                }
             } catch (IOException e) {
                 break;
             }
         }
+    }
+
+    public static String extraerUsuario(String mensaje) {
+        int indice = mensaje.indexOf(" SE HA UNIDO AL CHAT");
+        return mensaje.substring(0, indice);
     }
 }
