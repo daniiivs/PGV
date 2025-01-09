@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
+import java.io.*;
 import java.net.*;
 import java.util.Scanner;
 
@@ -15,6 +15,11 @@ public class Usuario {
     static NetworkInterface networkInterface;
     static String direccionMulticast = "225.10.10.10";
     static int puertoMulticast = 6998;
+
+    static Socket serverSocket;
+    static InetSocketAddress serverSocketAddress;
+    static String IP = "localhost";
+    static int puertoServer = 7668;
 
     public static void main(String[] args) {
         JTextArea chatArea;
@@ -36,6 +41,21 @@ public class Usuario {
         }
 
         chatArea = crearChat(nombre);
+
+        try {
+            serverSocket = new Socket();
+            serverSocketAddress = new InetSocketAddress(IP, puertoServer);
+            serverSocket.connect(serverSocketAddress);
+            System.out.println("Se ha conectado al socket con IP " + serverSocket.getInetAddress() + ", en el puerto " + serverSocket.getPort());
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(serverSocket.getOutputStream()));
+
+            ListenerUsuario listenerUsuario = new ListenerUsuario(in, out, chatArea);
+            listenerUsuario.start();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         byte[] buffer = new byte[1024];
         String mensaje;

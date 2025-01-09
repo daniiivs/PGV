@@ -35,6 +35,7 @@ public class Chat extends Thread {
                 mensaje = new String(packet.getData(), 0, packet.getLength());
                 chatArea.append(mensaje + "\n");
             } catch (IOException e) {
+                System.err.print("Ha ocurrido un error");
                 break;
             }
         }
@@ -60,7 +61,7 @@ public class Chat extends Thread {
             throw new RuntimeException(e);
         }
 
-        // Crear la ventana principal
+        // Ventana principal
         JFrame frame = new JFrame("CHAT DE " + nombre.toUpperCase());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 500);
@@ -99,7 +100,7 @@ public class Chat extends Thread {
             }
         });
 
-        // Acción al presionar Enter en el campo de texto
+        // Acción al presionar "Enter" en el campo de texto
         inputField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

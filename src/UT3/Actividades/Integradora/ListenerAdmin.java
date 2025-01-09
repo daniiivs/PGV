@@ -4,10 +4,10 @@ import javax.swing.*;
 import java.io.IOException;
 import java.net.DatagramPacket;
 
-public class listenerAdmin extends Thread {
+public class ListenerAdmin extends Thread {
     JTextArea chatArea;
 
-    public listenerAdmin(JTextArea chatArea) {
+    public ListenerAdmin(JTextArea chatArea) {
         this.chatArea = chatArea;
     }
 
