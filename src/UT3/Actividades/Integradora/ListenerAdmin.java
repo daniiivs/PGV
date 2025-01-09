@@ -19,8 +19,9 @@ public class ListenerAdmin extends Thread {
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 Admin.multicastSocket.receive(packet);
                 mensaje = new String(packet.getData(), 0, packet.getLength());
-                if (mensaje.endsWith(" SE HA UNIDO AL CHAT")) {
+                if (mensaje.contains(" SE HA UNIDO AL CHAT EN ")) {
                     chatArea.append("\n" + mensaje + "\n\n");
+                    almacenarUsuario(mensaje);
                 }
             } catch (IOException e) {
                 break;
@@ -28,8 +29,8 @@ public class ListenerAdmin extends Thread {
         }
     }
 
-    public static String extraerUsuario(String mensaje) {
+    public static void almacenarUsuario(String mensaje) {
         int indice = mensaje.indexOf(" SE HA UNIDO AL CHAT");
-        return mensaje.substring(0, indice);
+        Admin.listaUsuarios.add(mensaje.substring(0, indice));
     }
 }

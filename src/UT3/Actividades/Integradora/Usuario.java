@@ -35,7 +35,6 @@ public class Usuario {
             networkInterface = NetworkInterface.getByInetAddress(inetAddress);
             multicastSocket.joinGroup(grupo, networkInterface);
             System.out.println("Se ha unido \"" + InetAddress.getLocalHost() + "\".");
-            enviarMensaje(nombre + " SE HA UNIDO AL CHAT");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -46,13 +45,15 @@ public class Usuario {
             serverSocket = new Socket();
             serverSocketAddress = new InetSocketAddress(IP, puertoServer);
             serverSocket.connect(serverSocketAddress);
-            System.out.println("Se ha conectado al socket con IP " + serverSocket.getInetAddress() + ", en el puerto " + serverSocket.getPort());
+            System.out.println("Se ha conectado al socket con IP " + serverSocket.getInetAddress() + ", en el puerto " + serverSocket.getLocalPort());
 
             BufferedReader in = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(serverSocket.getOutputStream()));
 
             ListenerUsuario listenerUsuario = new ListenerUsuario(in, out, chatArea);
             listenerUsuario.start();
+
+            enviarMensaje(nombre + " SE HA UNIDO AL CHAT EN " + serverSocket.getLocalPort());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -18,10 +18,16 @@ public class ListenerUsuario extends Thread {
 
     public void run() {
         String mensaje;
+
         try {
             while (true) {
                 mensaje = in.readLine();
-                chatArea.append(mensaje + "\n");
+                if (!mensaje.isEmpty()) {
+                    chatArea.append(mensaje + "\n");
+                    out.write("MENSAJE RECIBIDO CON ÉXITO");
+                    out.newLine();
+                    out.flush();
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
