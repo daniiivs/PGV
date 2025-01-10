@@ -50,7 +50,7 @@ public class Usuario {
             BufferedReader in = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(serverSocket.getOutputStream()));
 
-            ListenerUsuario listenerUsuario = new ListenerUsuario(in, out, chatArea);
+            ListenerUsuario listenerUsuario = new ListenerUsuario(in, out, chatArea, nombre);
             listenerUsuario.start();
 
             enviarMensaje(nombre + " SE HA UNIDO AL CHAT EN " + serverSocket.getLocalPort());

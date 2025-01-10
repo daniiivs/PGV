@@ -21,16 +21,10 @@ public class ListenerAdmin extends Thread {
                 mensaje = new String(packet.getData(), 0, packet.getLength());
                 if (mensaje.contains(" SE HA UNIDO AL CHAT EN ")) {
                     chatArea.append("\n" + mensaje + "\n\n");
-                    almacenarUsuario(mensaje);
                 }
             } catch (IOException e) {
                 break;
             }
         }
-    }
-
-    public static void almacenarUsuario(String mensaje) {
-        int indice = mensaje.indexOf(" SE HA UNIDO AL CHAT");
-        Admin.listaUsuarios.add(mensaje.substring(0, indice));
     }
 }

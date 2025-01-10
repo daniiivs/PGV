@@ -9,11 +9,13 @@ public class ListenerUsuario extends Thread {
     BufferedReader in;
     BufferedWriter out;
     JTextArea chatArea;
+    String usuario;
 
-    public ListenerUsuario(BufferedReader in, BufferedWriter out, JTextArea chatArea) {
+    public ListenerUsuario(BufferedReader in, BufferedWriter out, JTextArea chatArea, String nombre) {
         this.in = in;
         this.out = out;
         this.chatArea = chatArea;
+        this.usuario = nombre;
     }
 
     public void run() {
@@ -23,8 +25,12 @@ public class ListenerUsuario extends Thread {
             while (true) {
                 mensaje = in.readLine();
                 if (!mensaje.isEmpty()) {
-                    chatArea.append(mensaje + "\n");
-                    out.write("MENSAJE RECIBIDO CON ÉXITO");
+                    if (mensaje.equals("##USER##")) {
+                        out.write("##USERNAME:" + usuario);
+                    } else {
+                        chatArea.append(mensaje + "\n");
+                        out.write("MENSAJE RECIBIDO CON ÉXITO");
+                    }
                     out.newLine();
                     out.flush();
                 }

@@ -8,13 +8,14 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
 import java.net.*;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class Admin extends Thread {
-    static JTextArea chatArea;
-    static Random random = new Random();
+    static JTextArea chatArea; // El chat en el que se muestran los mensajes e información para el admin
+    static Random random = new Random(); // Para generar números aleatorios
 
+    // Variables para la conexión Multicast
     static MulticastSocket multicastSocket;
     static InetAddress inetAddress;
     static InetSocketAddress grupo;
@@ -22,27 +23,40 @@ public class Admin extends Thread {
     static String direccionMulticast = "225.10.10.10";
     static int puertoMulticast = 6998;
 
+    // Variables para la conexión TCP
     static int puerto = 7668;
-    static ArrayList<String> listaUsuarios = new ArrayList<>();
-    static ArrayList<Socket> listaSocketUsuarios = new ArrayList<>();
-
     Socket TCPSocket;
     BufferedReader in;
+    BufferedWriter out;
 
+    // Lista de usuarios y de sus respectivos sockets
+    static HashMap<String, Socket> mapaUsuarios = new HashMap<>();
+
+    // Constructor para Admin, que se usa cada vez que se une un cliente por TCP
     public Admin(Socket socket) {
         this.TCPSocket = socket;
-        listaSocketUsuarios.add(TCPSocket);
     }
 
+    // Hilo que actúa como Listener para cada cliente por TCP
     public void run() {
         try {
             in = new BufferedReader(new InputStreamReader(TCPSocket.getInputStream()));
+            out = new BufferedWriter(new OutputStreamWriter(TCPSocket.getOutputStream()));
             String mensaje;
+            String aviso = "##USER##";
+
+            out.write(aviso);
+            out.newLine();
+            out.flush();
 
             while (true) {
                 mensaje = in.readLine();
                 if (!mensaje.isEmpty()) {
-                    chatArea.append(mensaje + "\n\n");
+                    if (mensaje.startsWith("##USERNAME:")) {
+                        mapaUsuarios.put(mensaje.split(":")[1], TCPSocket);
+                    } else {
+                        chatArea.append(mensaje + "\n\n");
+                    }
                 }
             }
         } catch (IOException e) {
@@ -116,7 +130,7 @@ public class Admin extends Thread {
                     if (message.toLowerCase().startsWith("privado:")) {
                         try {
                             String[] valores = message.split(":");
-                            if (!listaUsuarios.contains(valores[1].toUpperCase())) {
+                            if (!mapaUsuarios.containsKey(valores[1].toUpperCase())) {
                                 chatArea.append("NO HAY NINGÚN USUARIO LLAMADO " + valores[1].toUpperCase() + "\n");
                             } else {
                                 enviarMensajePrivado(valores[1].toUpperCase(), valores[2]);
@@ -164,8 +178,8 @@ public class Admin extends Thread {
     }
 
     public static void enviarMensajePrivado(String user, String message) {
-        if (listaUsuarios.contains(user)) {
-            Socket socket = listaSocketUsuarios.get(listaUsuarios.indexOf(user));
+        if (mapaUsuarios.containsKey(user)) {
+            Socket socket = mapaUsuarios.get(user);
             try {
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 bufferedWriter.write(message);
