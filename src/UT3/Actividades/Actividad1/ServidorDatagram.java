@@ -74,7 +74,6 @@ public class ServidorDatagram extends Thread {
     public static void main(String[] args) {
         ServidorDatagram servidorDatagram;
         int puerto = 5999;
-        int i = 0;
 
         try {
             DatagramSocket datagramSocket = new DatagramSocket(puerto);

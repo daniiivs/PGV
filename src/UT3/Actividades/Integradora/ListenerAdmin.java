@@ -5,12 +5,16 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 
 public class ListenerAdmin extends Thread {
-    JTextArea chatArea;
+    JTextArea chatArea; // El chat en el que se imprimen los mensajes
 
+    // Constructor para el listener, que recibe el chat
     public ListenerAdmin(JTextArea chatArea) {
         this.chatArea = chatArea;
     }
 
+    // Cuerpo del hilo, que se encarga de escuchar nuevos mensajes que lleguen por Multicast
+    // Al Admin le llegan todos los mensajes (incluso los que él mismo manda), pero solo va a
+    // imprimir los que indiquen que un nuevo usuario se ha unido al grupo
     public void run() {
         byte[] buffer = new byte[1024];
         String mensaje;

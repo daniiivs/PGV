@@ -37,7 +37,7 @@ public class Admin extends Thread {
         this.TCPSocket = socket;
     }
 
-    // Hilo que actúa como Listener para cada cliente por TCP
+    // Hilo que actúa como Listener del Admin para cada cliente por TCP
     public void run() {
         try {
             in = new BufferedReader(new InputStreamReader(TCPSocket.getInputStream()));
@@ -45,17 +45,20 @@ public class Admin extends Thread {
             String mensaje;
             String aviso = "##USER##";
 
+            // Al comenzar el hilo, el admin envía un aviso al cliente que no se imprime para recoger
+            // su nombre de usuario y almacenarlo junto al socket en el HashMap
             out.write(aviso);
             out.newLine();
             out.flush();
 
+            // Bucle para escuchar mensajes de los clientes (confirmaciones de que reciben mensajes privados)
             while (true) {
                 mensaje = in.readLine();
                 if (!mensaje.isEmpty()) {
-                    if (mensaje.startsWith("##USERNAME:")) {
+                    if (mensaje.startsWith("##USERNAME:")) { // Para almacenar el usuario y el socket; solo se ejecuta una vez
                         mapaUsuarios.put(mensaje.split(":")[1], TCPSocket);
                     } else {
-                        chatArea.append(mensaje + "\n\n");
+                        chatArea.append(mensaje + "\n\n"); // Escribimos el mensaje en el chat
                     }
                 }
             }
@@ -65,34 +68,37 @@ public class Admin extends Thread {
     }
 
     public static void main(String[] args) {
+        // Configuración del multicast para el chat grupal
         try {
             multicastSocket = new MulticastSocket(puertoMulticast);
             inetAddress = InetAddress.getByName(direccionMulticast);
             grupo = new InetSocketAddress(inetAddress, puertoMulticast);
             networkInterface = NetworkInterface.getByInetAddress(inetAddress);
-            multicastSocket.joinGroup(grupo, networkInterface);
+            multicastSocket.joinGroup(grupo, networkInterface); // El admin también se une al grupo
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        chatArea = crearChat();
+        chatArea = crearChat(); // Creación del chat en el que se imprimen los mensajes
+
+        // Creamos el listener para el admin que estará pendiente a nuevos mensajes que lleguen por multicast
         ListenerAdmin listenerMulticast = new ListenerAdmin(chatArea);
         listenerMulticast.start();
 
+        // Configuración del servidor TCP
         Admin serverStream;
-        int i = 0;
         try {
             ServerSocket serverSocket = new ServerSocket(puerto);
             while (!serverSocket.isClosed()) {
-                i++;
-                serverStream = new Admin(serverSocket.accept());
-                serverStream.start();
+                serverStream = new Admin(serverSocket.accept()); // Aceptamos la conexión cada vez que un cliente se una
+                serverStream.start(); // Lanzamos un hilo que maneja la conexión con dicho cliente
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    // Crea la ventada del chat
     private static JTextArea crearChat() {
         // Crear la ventana principal
         JFrame frame = new JFrame("ADMIN");
@@ -126,28 +132,28 @@ public class Admin extends Thread {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String message = inputField.getText().trim();
-                if (!message.isEmpty()) {
-                    if (message.toLowerCase().startsWith("privado:")) {
+                if (!message.isEmpty()) { // Comprobamos que el mensaje no esté vacío
+                    if (message.toLowerCase().startsWith("privado:")) { // Comprobamos si es un mensaje privado
                         try {
                             String[] valores = message.split(":");
-                            if (!mapaUsuarios.containsKey(valores[1].toUpperCase())) {
+                            if (!mapaUsuarios.containsKey(valores[1].toUpperCase())) { // Comprobamos si el usuario indicado se encuentra conectado
                                 chatArea.append("NO HAY NINGÚN USUARIO LLAMADO " + valores[1].toUpperCase() + "\n");
                             } else {
-                                enviarMensajePrivado(valores[1].toUpperCase(), valores[2]);
-                                chatArea.append("HAS ENVIADO: " + valores[2] + " A " + valores[1].toUpperCase() + "\n");
+                                enviarMensajePrivado(valores[1].toUpperCase(), valores[2]); // Enviamos el mensaje privado
+                                chatArea.append("HAS ENVIADO: " + valores[2] + " A " + valores[1].toUpperCase() + "\n"); // Indicamos lo enviado en el admin
                             }
                         } catch (ArrayIndexOutOfBoundsException ex) {
                             chatArea.append("\nINTRODUCE EL FORMATO CORRECTO (PRIVADO:USUARIO:MENSAJE)\n\n");
                         }
-                    } else if (message.equalsIgnoreCase("descargar")) {
+                    } else if (message.equalsIgnoreCase("descargar")) { // Comprobamos si el mensaje es descargar
                         int number = random.nextInt(1, 101);
                         enviarMensaje("Se han descargado " + number + " archivos");
                         chatArea.append("\nHAS DESCARGADO " + number + " ARCHIVOS\n\n");
-                    } else {
+                    } else { // Si es cualquier otro mensaje, lo enviamos
                         enviarMensaje(message);
                         chatArea.append("HAS ENVIADO: " + message + "\n");
                     }
-                    inputField.setText("");
+                    inputField.setText(""); // Reseteamos el input
                 }
             }
         });
@@ -177,22 +183,20 @@ public class Admin extends Thread {
         return chatArea;
     }
 
+    // Envía un mensaje privado al usuario indicado (TCP)
     public static void enviarMensajePrivado(String user, String message) {
-        if (mapaUsuarios.containsKey(user)) {
-            Socket socket = mapaUsuarios.get(user);
-            try {
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-                bufferedWriter.write(message);
-                bufferedWriter.newLine();
-                bufferedWriter.flush();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            // TODO Indicar que no contiene
+        Socket socket = mapaUsuarios.get(user); // Obtiene el socket del usuario en cuestión
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            bufferedWriter.write(message);
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
+    // Envía mensajes globales (Multicast)
     public static void enviarMensaje(String mensaje) {
         try {
             byte[] buffer = mensaje.getBytes();
